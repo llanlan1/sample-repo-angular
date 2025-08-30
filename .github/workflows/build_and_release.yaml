@@ -1,20 +1,34 @@
-name: build_countingbook_app   # Name of the workflow (appears in GitHub Actions tab)
-
-on:
-  push:             # Trigger workflow on any push to the repo
-
-jobs:
-  build_app:        # Job name
-    runs-on: ubuntu-latest   # Use latest Ubuntu runner
-    steps:
-      - id: s01
-        run: echo "github ${{ github.ref_name }}"
-      # setup the environment
-      - run: echo "before " && ls -l
-      - id: s02
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-      - id: s03
-        uses: actions/checkout@v5
-      - run: echo "after " && ls -l
+name: build_countingbook_app   # Name of the workflow (appears in GitHub Actions tab) 
+ 
+on: 
+  push:             # Trigger workflow on any push to the repo 
+ 
+jobs: 
+  build_app:        # Job name 
+    runs-on: ubuntu-latest   # Use latest Ubuntu runner 
+    steps: 
+      - id: s01 
+        run: echo "github ${{ github.ref_name }}" 
+      # setup the environment 
+      - run: echo "before " && ls -l 
+      - id: s02 
+        uses: actions/setup-node@v4 
+        with: 
+          node-version: 24 
+      - id: s03 
+        uses: actions/checkout@v5 
+      - id: s04 
+        # install Angular cli and install packages from package.json 
+        run: npm i -g @angular/cli && npm ci && echo "Installed" 
+      - id: s05 
+        # build the Angular app 
+        run: ng build 
+      - id: s06 
+        run: echo "after " && ls -l 
+      - id: s07 
+        uses: nwtgck/actions-netlify@v3.0 
+        with: 
+          publish-dir: dist/countingbook/browser 
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
