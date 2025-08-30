@@ -28,7 +28,8 @@ jobs:
       - id: s07 
         uses: nwtgck/actions-netlify@v3.0 
         with: 
-          publish-dir: dist/countingbook/browser 
+          publish-dir: ./dist/countingbook/browser
+          production-deploy: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
