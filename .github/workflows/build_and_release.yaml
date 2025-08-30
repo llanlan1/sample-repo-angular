@@ -1,0 +1,11 @@
+name: build_countingbook_app   # Name of the workflow (appears in GitHub Actions tab)
+
+on:
+  push:             # Trigger workflow on any push to the repo
+
+jobs:
+  build_app:        # Job name
+    runs-on: ubuntu-latest   # Use latest Ubuntu runner
+    steps:
+      - id: s01
+        run: echo "github ${{ github.ref_name }}"
