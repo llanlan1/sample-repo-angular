@@ -21,7 +21,7 @@ jobs:
         # install Angular cli and install packages from package.json 
         run: npm i -g @angular/cli && npm ci && echo "Installed" 
       - id: s05 
-        # build the Angular app]
+        # build the Angular app
         run: ng build 
       - id: s06 
         run: echo "after " && ls -l 
